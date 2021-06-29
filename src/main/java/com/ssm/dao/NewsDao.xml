@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.NewsDao">
+	<!-- where -->
+	<sql id="selectNewsListWhere">
+	<where>
+		n.categoryId = c.categoryId
+		<if test="keywords!=null and keywords!=''">
+			and (n.title like CONCAT('%',#{keywords},'%') or
+			n.keywords like CONCAT('%',#{keywords},'%')
+		</if>
+		<if test="newsListCategoryId!=null and newsListCategoryId!=''">
+			and (n.categoryId =#{newsListCategoryId})
+		</if>
+	</where>
+	</sql>
+	<!-- find news-->
+	<select id="findNewsList" parameterType="String" resultType="News">
+		select n.*,c.categoryName from t_news as n,t_category as c
+		<include refid="selectNewsListWhere"/>
+		order by publishTime desc
+		limit #{startRows},#{pageSize}
+	</select>
+	<sql id="getNewsCountWhere">
+		<where>
+			<if test="keywords!=null and keywords!=''">
+				and(n.title like CONCAT('%',#{keywords},'%')or
+					n.keywords like CONCAT('%',#{keywords},'%'))
+			</if>
+			<if test="newsListCategoryId!=null and newsListCategoryId!=''">
+				and (n.categoryId=#{newsListCategoryId})
+			</if>
+		</where>
+	</sql>
+	
+	
+	<!-- find news count -->
+	<select id="getNewsCount" parameterType="String" resultType="Integer">
+		select count(*) from t_news as n
+		<include refid="getNewsCountWhere"/>
+	</select>
+	
+	
+	<!-- find news by newsId -->
+	<select id="getNewsByNewsId" parameterType="Integer" resultType="News">
+		select *,categoryName from t_news as n,t_category as c
+			where newsId=#{newsId} and n.categoryId=c.categoryId
+	</select>
+	
+	<!-- add -->
+	<insert id="addNews" parameterType="News">
+		insert into t_news(
+		title,
+		contentTitle,
+		content,
+		contentAbstract,
+		keywords,
+		author,
+		publishTime,
+		publishStatus,
+		categoryId
+		)
+		values(
+		#{title},
+		#{contentTitle},
+		#{content},
+		#{contentAbstract},
+		#{keywords},
+		#{author},
+		#{publishTime},
+		#{publishStatus},
+		#{categoryId}
+		)
+	</insert>
+	
+	<!-- update -->
+	<update id ="updateNews" parameterType="News">
+		update t_news
+	<set>
+		publishTime=#{publishTime},
+		publishStatus=#{publishStatus},
+		title=#{title},
+		content=#{content},
+		contentAbstract=#{contentAbstract},
+		keywords=#{keywords},
+		author=#{author},
+		categoryId=#{categoryId}
+	</set>	
+		where newsId = #{newsId}
+	</update>
+	
+	<!-- status -->
+	<update id="setNewsPublishStatus" parameterType="News">
+		update t_news set publishStatus=#{publishStatus} where newsId=#{newsId}
+	</update>
+	
+	<!-- delete -->
+	<delete id="deleteNews" parameterType="Integer">
+		delete from t_news where newsId=#{newsId}
+	</delete>
+</mapper>
