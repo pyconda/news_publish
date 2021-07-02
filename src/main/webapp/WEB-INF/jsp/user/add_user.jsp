@@ -11,16 +11,16 @@
 <%@ taglib uri="http://www.jstl.com" prefix="c" %>
 <form action="${pageContext.request.contextPath }/addUser.action" name="ff"
 method="post" onsubmit="return checkValue()">
-登录账号：
+登录账号：<br>
 <input id="loginName" name="loginName" value="${user.loginName }" type="text"/>
 &nbsp;<font style="color:Red;">${checkUserLoginNameMsg }</font>
-密码：
+<br>密码：<br>
 <input id="password" name="password" type="password"/>
-用户姓名：
+<br>用户姓名：<br>
 <input id="userName" name="userName" value="${user.userName }" type="text"/>
-电话号码:
+<br>电话号码:<br>
 <input id="tel" name="tel" value="${user.tel }" type="text"/>
-用户角色：
+<br>用户角色：<br>
 <select name="roleId" id="roleId">
 	<option value="">--请选择--</option>
 	<c:forEach items="${roleList }" var="r">
@@ -33,7 +33,7 @@ method="post" onsubmit="return checkValue()">
 			</option>
 			</c:forEach>
 </select>
-
+<br>
 <input name="" type="submit" value="确认添加"/>
 &nbsp;&nbsp;
 <input name="" type="button" onclick="goback();" value="返回列表"/>

@@ -59,7 +59,7 @@ public boolean preHandle(HttpServletRequest request, HttpServletResponse reponse
 	}
 	
 	request.setAttribute("msg", "你还没有登录，请先登录");
-	request.getRequestDispatcher("/WEB-INF/jsp/skip.jsp").forward(request, reponse);
+	request.getRequestDispatcher("/skip.jsp").forward(request, reponse);
 	return false;
 }
 

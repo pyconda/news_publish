@@ -10,6 +10,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/jquery-easyui-1.3.3/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
+
+<script src="https://cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
 <script type="text/javascript">
 	var url;
 	
@@ -49,6 +51,8 @@
 				if(!$(this).form("validate")){
 					return false;
 				}
+				 
+				 oldPassword= md5(oldPassword);
 				if(oldPassword!='${login_user.password}'){
 					$.messager.alert("系统提示","用户密码输入错误！");
 					return false;
@@ -131,7 +135,7 @@
 	</div>
 </div>
 <div region="south" style="height: 25px;padding: 5px;" align="center">
-	版权所有   <a href="http://www.java1234.com" target="_blank">@chenzhi</a> (2013-2015)
+		<a class="copyright text-center mb-0">&copy; pyconda@foxmail.com | All Right Reserved <a href="https://github.com/pyconda" target="_blank">pyconda</a></a>
 </div>
 
 

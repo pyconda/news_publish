@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,6 +26,7 @@ import com.ssm.po.Role;
 import com.ssm.po.User;
 import com.ssm.service.RoleService;
 import com.ssm.service.UserService;
+import com.ssm.utils.MD5Utils;
 import com.ssm.utils.ResponseUtil;
 
 import net.sf.json.JSONObject;
@@ -175,7 +177,8 @@ public class UserController {
 	//login
 	@RequestMapping(value="/login.action",method=RequestMethod.POST)
 	public String login(String loginName,String password,Model model,HttpSession session){
-		User user = userService.findUser(loginName, password);
+		//User user = userService.findUser(loginName, MD5Utils.code(password));
+		User user = userService.findUser(loginName, MD5Utils.code(password));
 		if(user!=null){
 			if(user.getStatus().equals("2")){
 				session.setAttribute("login_user", user);
@@ -192,20 +195,27 @@ public class UserController {
 	@RequestMapping(value="/logout.action")
 	public String logout(HttpSession session){
 		session.invalidate();
-		return "login";
+		return "redirect:/login.jsp";
 	}
 	//modifyPassword
 	@RequestMapping(value="/modifyPassword.action")
 	public String modifyPassword(User user,HttpServletResponse response)throws Exception{
+		user.setPassword(MD5Utils.code(user.getPassword()));
 		int resultTotal=userService.modifyPassword(user);
 		JSONObject result=new JSONObject();
-		if(resultTotal>0){ // ִ�гɹ�
+		if(resultTotal>0){ 
 			result.put("success", true);
 		}else{
 			result.put("success", false);
 		}
 		ResponseUtil.write(response, result);
 		return null;
+	}
+	
+	@GetMapping(value="/toLogin.action")
+	public String register(){
+		
+		return "login";
 	}
 }
 

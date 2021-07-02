@@ -141,7 +141,7 @@ public class NewsController {
 		model.addAttribute("pb1",pb1);
 		PageBean<News> pb2=newsService.findNewsByPage(keywords, 2, currentPage, pageSize);
 		model.addAttribute("pb2",pb2);
-		return "../../first";
+		return "web/news";
 	}
 	//page by categoryId
 	@RequestMapping(value="/findNewsByCategoryIdPage.action")
@@ -160,15 +160,15 @@ public class NewsController {
 		model.addAttribute("newsListCategoryId",newsListCategoryId);
 		model.addAttribute("currentPage",currentPage);
 		model.addAttribute("pageSize",pageSize);
-		return "../../list";
+		return "web/news";
 	}
 	//find page --front
-	@RequestMapping(value="/findFrontNewsByNewsId.action")
+	@RequestMapping(value="/findFronNewsByNewsId.action")
 	public String findFrontNewsByNewsId(Integer newsId,Model model){
 		News news=newsService.getNewsByNewsId(newsId);
 		if(news!=null){
 			model.addAttribute("news",news);
 		}
-		return "../../detail";
+		return "web/detail";
 	}
 }

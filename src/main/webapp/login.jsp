@@ -36,13 +36,7 @@
 </head>
 <body>
 	<div class="login">
-		<div class="header">
-			<div class="switch">
-				<a href="#" class="switch_login" id="switch_login">后台登录</a>
-				<div class="switch_bottom" id="switch_bottom" style="position:absolute;width:70px;left:0px;"> 
-			</div>
-		</div>
-	</div>
+
 	<!-- login -->
 	<div class="qlogin" id="qlogin">
 		<div class="web_login" align="center">
@@ -81,7 +75,7 @@
 					</button>
 				</div>
 		            <div style="display:inline;">
-               		 <a href="javascript:void(0)">还未注册？</a>
+               		 <a href="${pageContext.request.contextPath}/toAddUser.action">还未注册？</a>
            			 </div>
            			 <div style="display:inline;margin-left:26px;">
                			 <a href="javascript:void(0)">忘记密码？</a>

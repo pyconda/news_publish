@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.ssm.dao.UserDao;
 import com.ssm.po.User;
 import com.ssm.service.UserService;
+import com.ssm.utils.MD5Utils;
 
 /**
  * @author chenzhi
@@ -74,6 +75,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public int addUser(User user) {
 		// TODO Auto-generated method stub
+		user.setPassword(MD5Utils.code(user.getPassword()));
 		return userDao.addUser(user);
 	}
 
